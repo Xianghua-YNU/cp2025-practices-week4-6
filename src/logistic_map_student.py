@@ -18,6 +18,7 @@ def iterate_logistic(r, x0, n):
         x: 迭代序列数组
     """
     pass
+fjhfgkgk
 
 def plot_time_series(r, x0, n):
     """
