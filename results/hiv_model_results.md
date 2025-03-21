@@ -1,8 +1,9 @@
 # HIV 病毒载量模型研究结果
 
 ## 病毒载量变化图
+![Figure_1](https://github.com/user-attachments/assets/92bcf182-d3cf-4cf0-a8cd-1bf633c18b63)
 
-![病毒载量变化图](path/to/viral_load.png)
+
 
 ## 模型预测图
 
