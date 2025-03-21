@@ -33,7 +33,7 @@ def main():
     # 生成时间序列
     time = np.linspace(0, 10, 100)
     
-    # 计算并绘制模型曲线
+    # 计算绘制模型曲线
     model.plot_model(time)
     
     # 加载实验数据
