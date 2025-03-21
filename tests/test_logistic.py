@@ -60,3 +60,4 @@ def test_plot_bifurcation():
 
 if __name__ == "__main__":
     pytest.main(["-v", __file__])
+
