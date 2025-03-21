@@ -32,7 +32,6 @@ def plot_bifurcation(r_min, r_max, n_r, n_iterations, n_discard):
         for i in range(1, n_iterations):
             x[i] = r_val * x[i-1] * (1 - x[i-1])
         
-        # 只保留稳定后的点
         x_plot.extend(x[n_discard:])
         r_plot.extend([r_val] * (n_iterations - n_discard))
     
@@ -45,8 +44,6 @@ def plot_bifurcation(r_min, r_max, n_r, n_iterations, n_discard):
     return fig
 
 def main():
-    """主函数"""
-    # 时间序列分析
     r_values = [2.0, 3.2, 3.45, 3.6]
     x0 = 0.5
     n = 100
