@@ -5,69 +5,81 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
-def logistic_iteration(r, x0, num_iter):
+def iterate_logistic(r, x0, n):
     """
-    此函数用于执行Logistic模型的迭代计算
-    :param r: 参数r
-    :param x0: 初始值
-    :param num_iter: 迭代次数
-    :return: 每次迭代后的x值数组
+    迭代Logistic映射
+    
+    参数:
+        r: 增长率参数
+        x0: 初始值
+        n: 迭代次数
+        
+    返回:
+        x: 迭代序列数组
     """
-    x = np.zeros(num_iter)
+    x = np.zeros(n)
     x[0] = x0
-    for i in range(1, num_iter):
-        x[i] = r * x[i - 1] * (1 - x[i - 1])
+    for i in range(1, n):
+        x[i] = r * x[i-1] * (1 - x[i-1])
     return x
 
+def plot_time_series(r, x0, n):
+    """
+    绘制时间序列图
+    
+    参数:
+        r: 增长率参数
+        x0: 初始值
+        n: 迭代次数
+        
+    返回:
+        fig: matplotlib图像对象
+    """
+    x = iterate_logistic(r, x0, n)
+    t = np.arange(n)
+    
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.plot(t, x, 'b-', lw=1)
+    ax.set_xlabel('迭代次数')
+    ax.set_ylabel('x')
+    ax.set_title(f'Logistic映射时间序列 (r={r})')
+    ax.grid(True)
+    
+    return fig
 
-# 任务1：Logistic模型的迭代
-r_values = [2, 3.2, 3.45, 3.6]
-x0 = 0.5
-num_iter = 60
-
-plt.figure(figsize=(12, 8))
-for i, r in enumerate(r_values):
-    x = logistic_iteration(r, x0, num_iter)
-    plt.subplot(2, 2, i + 1)
-    plt.plot(range(num_iter), x)
-    plt.title(f'r = {r}')
-    plt.xlabel('迭代次数')
-    plt.ylabel('x')
-
-    if r == 2:
-        print(f"当 r = {r} 时，x 趋于 {x[-1]}，没有分岔。")
-    elif r == 3.2:
-        stable_values = np.unique(np.round(x[-20:], 5))
-        print(f"当 r = {r} 时，x 趋于 {stable_values}，周期2分岔。")
-    elif r == 3.45:
-        stable_values = np.unique(np.round(x[-20:], 5))
-        print(f"当 r = {r} 时，x 趋于 {stable_values}，周期4分岔。")
-    elif r == 3.6:
-        print(f"当 r = {r} 时，x 的取值没有明确趋向，混沌。")
-
-plt.tight_layout()
-plt.show()
-
-# 任务2：费根鲍姆图的绘制
-r_range = np.arange(2.6, 4, 0.001)
-x0 = 0.5
-num_iter = 250
-transient = 100
-
-x_values = []
-for r in r_range:
-    x = logistic_iteration(r, x0, num_iter)
-    x_values.append(x[transient:])
-
-plt.figure(figsize=(12, 8))
-for i, r in enumerate(r_range):
-    plt.scatter([r] * len(x_values[i]), x_values[i], s=0.1, color='k')
-
-plt.title('费根鲍姆图')
-plt.xlabel('r')
-plt.ylabel('x')
-plt.show()
-
-
+def plot_bifurcation(r_min, r_max, n_r, n_iterations, n_discard):
+    """
+    绘制分岔图
+    
+    参数:
+        r_min: r的最小值
+        r_max: r的最大值
+        n_r: r的取值个数
+        n_iterations: 每个r值的迭代次数
+        n_discard: 每个r值丢弃的初始迭代点数
+        
+    返回:
+        fig: matplotlib图像对象
+    """
+    r = np.linspace(r_min, r_max, n_r)
+    x = np.zeros(n_iterations)
+    x_plot = []
+    r_plot = []
+    
+    for r_val in r:
+        x[0] = 0.5
+        for i in range(1, n_iterations):
+            x[i] = r_val * x[i-1] * (1 - x[i-1])
+        
+        # 只保留稳定后的点
+        x_plot.extend(x[n_discard:])
+        r_plot.extend([r_val] * (n_iterations - n_discard))
+    
+    fig, ax = plt.subplots(figsize=(12, 8))
+    ax.plot(r_plot, x_plot, ',k', alpha=0.1, markersize=0.1)
+    ax.set_xlabel('r')
+    ax.set_ylabel('x')
+    ax.set_title('Logistic映射分岔图')
+    
+    return fig
 
