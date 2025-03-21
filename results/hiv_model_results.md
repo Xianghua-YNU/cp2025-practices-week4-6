@@ -6,8 +6,8 @@
 
 
 ## 模型预测图
+![Figure_3](https://github.com/user-attachments/assets/0fb43aa1-959e-4b69-b233-314fe0a65dec)
 
-![模型预测图](path/to/model_prediction.png)
 
 ## 分析与结论
 
