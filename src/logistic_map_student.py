@@ -17,12 +17,11 @@ def iterate_logistic(r, x0, n):
     返回:
         x: 迭代序列数组
     """
-    num=[x0]
-    for i in range(0,61):
-        t=r*x0*(1-x0)
-        x0=t
-        num.append(t)
-    return num
+    x = np.zeros(n)
+    x[0] = x0
+    for i in range(1, n):
+        x[i] = r * x[i-1] * (1 - x[i-1])
+    return x
 
 def plot_time_series(r, x0, n):
     """
@@ -83,4 +82,3 @@ def plot_bifurcation(r_min, r_max, n_r, n_iterations, n_discard):
     ax.set_title('Logistic映射分岔图')
     
     return fig
-
