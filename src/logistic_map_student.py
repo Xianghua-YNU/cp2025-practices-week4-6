@@ -22,7 +22,7 @@ def plot_time_series(r, x0, n):
 plt.show()
 
 def plot_bifurcation(r_min, r_max, n_r, n_iterations, n_discard):
-   r = np.linspace(r_min, r_max, n_r)
+    r = np.linspace(r_min, r_max, n_r)
     x = np.zeros(n_iterations)
     x_plot = []
     r_plot = []
@@ -32,6 +32,7 @@ def plot_bifurcation(r_min, r_max, n_r, n_iterations, n_discard):
         for i in range(1, n_iterations):
             x[i] = r_val * x[i-1] * (1 - x[i-1])
         
+        # 只保留稳定后的点
         x_plot.extend(x[n_discard:])
         r_plot.extend([r_val] * (n_iterations - n_discard))
     
