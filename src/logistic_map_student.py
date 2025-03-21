@@ -6,33 +6,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def iterate_logistic(r, x0, n):
-    """
-    迭代Logistic映射
-    
-    参数:
-        r: 增长率参数
-        x0: 初始值
-        n: 迭代次数
-        
-    返回:
-        x: 迭代序列数组
-    """
-    pass
-fjhfgkgk
+  num=[x0]
+    for i in range(0,n+1):
+        t=r*x0*(1-x0)
+        x0=t
+        num.append(t)
+    return num
+
 
 def plot_time_series(r, x0, n):
-    """
-    绘制时间序列图
-    
-    参数:
-        r: 增长率参数
-        x0: 初始值
-        n: 迭代次数
-        
-    返回:
-        fig: matplotlib图像对象
-    """
-    pass
+    num=iterate_logistic(r, x0, n)
+    x=np.arange(n+1)
+    for i in x:
+    plt.plot(i,num[i])
+plt.show()
 
 def plot_bifurcation(r_min, r_max, n_r, n_iterations, n_discard):
    r = np.linspace(r_min, r_max, n_r)
